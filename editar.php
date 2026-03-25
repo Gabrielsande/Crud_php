@@ -29,6 +29,8 @@ if (isset($_GET['id'])) {
 <head>
     <meta charset="UTF-8">
     <title>Editar Usuário</title>
+    <?php include_once './includes/head.php'; ?>
+
 </head>
 <body>
     <h1>Editar Usuário</h1>

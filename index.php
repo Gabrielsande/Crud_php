@@ -3,13 +3,10 @@ session_start();
 include_once './config/config.php';
 include_once './classes/Usuario.php';
 
-
 $usuario = new Usuario($db);
-
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (isset($_POST['login'])) {
-        // Processar login
         $email = $_POST['email'];
         $senha = $_POST['senha'];
         if ($dados_usuario = $usuario->login($email, $senha)) {
@@ -17,48 +14,57 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             header('Location: portal.php');
             exit();
         } else {
-            $mensagem_erro = "Credenciais inválidas!";
+            $mensagem_erro = "E-mail ou senha incorretos. Tente novamente.";
         }
     }
 }
 ?>
 <!DOCTYPE html>
-<html>
-
+<html lang="pt-br">
 
 <head>
-    <title>A U T E N T I C A Ç Ã O</title>
-  <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Entrar — Sistema</title>
+    <?php include_once './includes/head.php'; ?>
 </head>
 
-
 <body>
+    <div class="auth-screen">
+        <div class="auth-card">
+            <div class="brand"
+                style="display:flex;align-items:center;gap:10px;margin-bottom:32px;text-decoration:none;">
+                <div class="brand-dot"></div>
+                <span
+                    style="font-family:'Syne',sans-serif;font-weight:800;font-size:16px;letter-spacing:0.08em;">SISTEMA</span>
+            </div>
 
+            <h1 class="auth-title">Bem-vindo de volta</h1>
+            <p class="auth-subtitle">Faça login para acessar o painel</p>
 
-    <div class="container">
-
-
-        <div class="box">
-            <h1>A U T E N T I C A Ç Ã O</h1>
-
+            <?php if (isset($mensagem_erro)): ?>
+                <div class="alert alert-danger"><?php echo $mensagem_erro; ?></div>
+            <?php endif; ?>
 
             <form method="POST">
-                <label for="email">Email:</label>
-                <input type="email" name="email" required>
-                <br><br>
-                <label for="senha">Senha:</label>
-                <input type="password" name="senha" required>
-                <br><br>
-                <input type="submit" name="login" value="Login">
+                <div class="field">
+                    <label for="email">E-mail</label>
+                    <input type="email" id="email" name="email" placeholder="seu@email.com" required>
+                </div>
+                <div class="field">
+                    <label for="senha">Senha</label>
+                    <input type="password" id="senha" name="senha" placeholder="••••••••" required>
+                </div>
+                <button type="submit" name="login" class="btn btn-primary btn-full">
+                    Entrar
+                </button>
             </form>
-            <p>Não tem uma conta? <a href="./registrar.php">Registre-se aqui</a></p>
-            <div class="mensagem">
-                <?php if (isset($mensagem_erro)) echo '<p>' . $mensagem_erro . '</p>'; ?>
+
+            <div class="auth-link">
+                Não tem conta? <a href="./registrar.php">Criar conta</a>
             </div>
         </div>
-
-
+    </div>
 </body>
-
 
 </html>

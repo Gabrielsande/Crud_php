@@ -41,6 +41,8 @@ function saudacao() {
 <head>
     <meta charset="UTF-8">
     <title>Portal</title>
+    <?php include_once './includes/head.php'; ?>
+
 </head>
 <body>
     <h1><?php echo saudacao() . ", " . $nome_usuario; ?>!</h1>
